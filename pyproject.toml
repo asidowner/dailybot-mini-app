@@ -1,0 +1,68 @@
+[tool.poetry]
+name = "dailybot"
+version = "0.1.0"
+description = ""
+authors = ["Sidorenkov Anton"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pydantic = "^2.8.2"
+pydantic-settings = "^2.4.0"
+alembic = "^1.13.2"
+psycopg = {version = "^3.2.1", extras = ["binary"]}
+python-telegram-bot = "^21.4"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.2"
+mypy = "^1.11.1"
+ruff = "^0.6.2"
+pre-commit = "^3.8.0"
+
+[tool.ruff]
+fix = true
+unsafe-fixes = true
+line-length = 120
+lint.select = ["ALL"]
+lint.ignore = ["D", "ANN101", "ANN102", "ANN401", "TD003", "FIX002", "COM812", "ISC001", "FBT001", "FBT002", "RUF", "ERA", "ARG005"]
+cache-dir = "/tmp/ruff-cache/"
+extend-exclude = ["migrations"]
+
+[tool.ruff.lint.isort]
+no-lines-before = ["future", "standard-library"]
+known-local-folder = ["bot", "config"]
+
+[tool.ruff.lint.extend-per-file-ignores]
+"tests/*.py" = ["ANN401", "S101", "S311"]
+
+[tool.mypy]
+python_version = "3.10"
+files = "bot/*.py"
+ignore_missing_imports = false
+warn_return_any = true
+warn_unused_configs = true
+show_error_codes = true
+show_error_context = true
+pretty = true
+disallow_subclassing_any = true
+disallow_any_generics = true
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+follow_imports_for_stubs = true
+namespace_packages = true
+show_absolute_path = true
+
+[[tool.mypy.overrides]]
+module = "asyncpg.*"
+ignore_missing_imports = true
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
