@@ -1,4 +1,6 @@
 from __future__ import annotations
+import datetime
+import os
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -9,6 +11,24 @@ class EnvBaseSettings(BaseSettings):
 
 class BotSettings(EnvBaseSettings):
     bot_token: str
+    admin_user_ids: list[int] = []
+
+
+class DailySettings(EnvBaseSettings):
+    daily_mini_app_url: str
+    daily_place: str
+    daily_time: datetime.time = datetime.time(
+        hour=10,
+        minute=15,
+        second=0,
+        tzinfo=datetime.timezone(datetime.timedelta(hours=3)),
+    )
+    daily_message_time: datetime.time = datetime.time(
+        hour=10,
+        minute=0,
+        second=0,
+        tzinfo=datetime.timezone(datetime.timedelta(hours=3)),
+    )
 
 
 class DBSettings(EnvBaseSettings):
@@ -19,14 +39,17 @@ class DBSettings(EnvBaseSettings):
     db_name: str = "postgres"
 
     @property
-    def database_url_psycopg(self) -> str:
-        if self.DB_PASS:
+    def database_url(self) -> str:
+        if self.db_pass:
             return f"postgresql+psycopg://{self.db_user}:{self.db_pass}@{self.db_host}:{self.db_port}/{self.db_name}"
         return f"postgresql+psycopg://{self.db_user}@{self.db_host}:{self.db_port}/{self.db_name}"
 
 
-class Settings(BotSettings, DBSettings):
+class Settings(BotSettings, DBSettings, DailySettings):
+    debug: bool = False
     sentry_dsn: str | None = None
+    base_path: str | None = os.path.realpath(__file__)
+    timezone_offset: int = 3
 
 
 settings = Settings()
