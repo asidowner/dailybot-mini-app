@@ -161,12 +161,12 @@ async def get_daily_result(update: Update, context: ContextTypes.DEFAULT_TYPE) -
             text=DAILY_DATA_IS_EMPTY_TEXT,
         )
     else:
-        message = build_daily_result(date_from, daily_data)
+        file = build_daily_result(date_from, daily_data)
         await update.message.reply_text(
             text=DAILY_DATA_TEXT,
         )
         await update.message.reply_document(
-            document=bytes(message, "utf-8"),
+            document=bytes(file, "utf-8"),
             filename=f"daily_result_{date_from}.html",
         )
 
@@ -179,7 +179,7 @@ async def web_app_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 
     save_daily_data(user, **form_data)
 
-    await update.message.reply_markdown_v2(
+    await update.message.reply_text(
         text=DAILY_DATA_SAVE_MESSAGE,
         reply_markup=ReplyKeyboardRemove(),
     )

@@ -11,7 +11,7 @@ pydantic = "^2.8.2"
 pydantic-settings = "^2.4.0"
 alembic = "^1.13.2"
 psycopg = {version = "^3.2.1", extras = ["binary"]}
-sqlalchemy = "^2.0.33"
+sqlalchemy = "^2.0.34"
 python-telegram-bot = {version = "^21.5", extras = ["job-queue"]}
 jinja2 = "^3.1.4"
 
