@@ -20,7 +20,7 @@ def get_user(user_id: int) -> UserModel | None:
 def get_users() -> list[UserModel]:
     session = session_maker()
 
-    query = select(UserModel).where(UserModel.is_block is False)
+    query = select(UserModel).where(UserModel.is_block.is_(False))
 
     with session.begin():
         return session.execute(query).scalars().all()
