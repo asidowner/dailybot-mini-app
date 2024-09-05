@@ -20,15 +20,15 @@ jobs:
       - name: Run tests
         run: make test
         env:
-          - DB_HOST: postgres
-          - DB_PORT: 5432
-          - DB_USER: postgres
-          - DB_PASS: postgres
-          - DB_NAME: postgres
-          - DAILY_MINI_APP_URL: https://asidowner.github.io/dailybot-mini-app/daily-form.html
-          - DAILY_PLACE: "Some Place"
-          - DAILY_TIME: 10:15:00+03:00
-          - BOT_TOKEN: SUPER_SECRET_TOKEN
+          DB_HOST: postgres
+          DB_PORT: 5432
+          DB_USER: postgres
+          DB_PASS: postgres
+          DB_NAME: postgres
+          DAILY_MINI_APP_URL: https://asidowner.github.io/dailybot-mini-app/daily-form.html
+          DAILY_PLACE: "Some Place"
+          DAILY_TIME: 10:15:00+03:00
+          BOT_TOKEN: SUPER_SECRET_TOKEN
       - name: Publish code coverage report
         uses: paambaati/codeclimate-action@v9.0.0
         env:
