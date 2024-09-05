@@ -1,0 +1,27 @@
+name: Test and Check repo
+
+on: [push, pull_request]
+
+jobs:
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v3
+        with:
+          python-version: 3.11.x
+      - name: Install dependencies
+        run: |
+          pip install poetry
+          poetry install
+      - name: Run pre-commit
+        uses: pre-commit/action@v3.0.1
+      - name: Run tests
+        run: make test
+      - name: Publish code coverage report
+        uses: paambaati/codeclimate-action@v9.0.0
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+        with:
+          coverageCommand: make test-coverage-report-xml

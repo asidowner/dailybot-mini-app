@@ -17,5 +17,10 @@ run:
 test:
 	poetry run pytest
 
+.PHONY: coverage
 coverage:
 	pytest --cov=bot tests/
+
+.PHONY: test-coverage-report-xml
+test-coverage-report-xml:
+	poetry run coverage xml
