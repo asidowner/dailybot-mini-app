@@ -31,6 +31,6 @@ jobs:
           DAILY_TIME: 10:15:00+03:00
           BOT_TOKEN: SUPER_SECRET_TOKEN
         with:
-          coverageCommand: poetry run pytest --cov=bot
+          coverageCommand: poetry run pytest --cov=bot --cov-report=lcov
           coverageLocations: |
             ${{github.workspace}}/*.lcov:lcov

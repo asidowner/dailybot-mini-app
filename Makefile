@@ -19,7 +19,7 @@ test:
 
 .PHONY: coverage
 coverage:
-	poetry run pytest --cov=bot
+	poetry run pytest --cov=bot --cov-report=lcov
 
 .PHONY: test-coverage-report
 test-coverage-report: test
