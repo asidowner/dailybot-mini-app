@@ -21,6 +21,6 @@ test:
 coverage:
 	pytest --cov=bot tests/
 
-.PHONY: test-coverage-report-xml
-test-coverage-report-xml:
-	poetry run coverage xml
+.PHONY: test-coverage-report
+test-coverage-report: test
+	poetry run coverage lcov
