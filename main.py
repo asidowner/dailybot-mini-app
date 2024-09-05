@@ -6,6 +6,7 @@ require a bot token.
 """
 import logging
 
+import sentry_sdk
 from telegram import Update
 from telegram.ext import Application
 
@@ -20,7 +21,20 @@ logger = logging.getLogger(__name__)
 
 
 def main() -> None:
-    """Start the bot."""
+    """Start project. Configure sentry and start bot."""
+    if settings.sentry_dsn:
+        # Start sentry
+        sentry_sdk.init(
+            dsn=settings.sentry_dsn,
+            # Set traces_sample_rate to 1.0 to capture 100%
+            # of transactions for tracing.
+            traces_sample_rate=1.0,
+            # Set profiles_sample_rate to 1.0 to profile 100%
+            # of sampled transactions.
+            # We recommend adjusting this value in production.
+            profiles_sample_rate=1.0,
+        )
+
     # Create the Application and pass it your bot's token.
     application = Application.builder().concurrent_updates(concurrent_updates=False).token(settings.bot_token).build()
 

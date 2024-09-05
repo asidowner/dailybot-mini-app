@@ -13,3 +13,9 @@ migrate:
 
 run:
 	poetry run python -m main
+
+test:
+	poetry run pytest
+
+coverage:
+	pytest --cov=bot tests/

@@ -29,6 +29,7 @@ from bot.constants import (
     START_TEXT,
     UNHANDLED_ERROR,
 )
+from bot.dto import AddToAllowList
 from bot.misc import build_daily_result
 from bot.services.daily import get_daily_data, save_daily_data
 from bot.services.user import add_user, add_user_id_to_allow_access, get_user, is_allow_access
@@ -194,12 +195,12 @@ async def add_user_to_allow_list(update: Update, context: ContextTypes.DEFAULT_T
         )
         return
 
-    user_id_to_add: int = context.args[0]
+    data = AddToAllowList(user_id=context.args[0])
 
-    add_user_id_to_allow_access(user_id_to_add)
+    add_user_id_to_allow_access(data.user_id)
 
     await update.effective_message.reply_text(
-        text=ALLOW_ID_ADDED_SUCCESSFUL % user_id_to_add,
+        text=ALLOW_ID_ADDED_SUCCESSFUL % data.user_id,
     )
 
 
